@@ -13,6 +13,10 @@ class User < ApplicationRecord
   
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followings, through: :relationships ,source: :followed
+
+  # DM機能アソシエーション
+  has_many :messengers, dependent: :destroy
+  has_many :messages, dependent: :destroy
   
   has_one_attached :profile_image
 

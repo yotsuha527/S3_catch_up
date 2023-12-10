@@ -1,0 +1,43 @@
+DM機能だよ～ん
+<div class="container">
+  <div class="row">
+    <% @messengers.each do |messenger| %>
+      <% if messenger.user_id != current_user.id %>
+        <h2><%= messenger.user.name %>さんとのトーク</h2>
+      <% end %>
+    <% end %>
+  </div>
+  <% if @messages.present? %>
+    <% @messages.each do |message| %>
+      <% if current_user.id == message.user.id  %>
+        <div class="row">
+          <div class="col text-left">
+            <i class="fa-regular fa-user"></i><%= message.user.name %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col ml-4 text-left">
+          <i class="fa-regular fa-message"></i><%= message.message %>
+          </div>
+        </div>
+      <% else %>
+        <div class="row">
+          <div class="col text-right">
+            <%= message.user.name %><i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mr-4 text-right">
+            <%= message.message %><i class="fa-solid fa-message"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+<%= form_with model: @message, url:messages_path do |f| %>
+  <%= f.text_field :message, placeholder: "メッセージを入力" , size: 50, class:"form-text-field" %>
+  <%= f.hidden_field :room_id, value: @room.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.submit "送信",class: 'form-submit'%>
+<% end %>

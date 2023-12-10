@@ -18,7 +18,7 @@ class UsersController < ApplicationController
         end
       end
     end
-    if @is_room # Roomが作られていなければ新規で作る
+    unless @is_room # Roomが作られていなければ新規で作る
       @room = Room.new
       @messenger = Messenger.new
     end

@@ -1,12 +1,12 @@
 <% if current_user.following?(user) && user.following?(current_user) %>
   <% if @is_room %>  
-    <%= link_to "chatを始める", room_path(room_id) %>
+    <%= link_to "chatを始める", room_path(@room_id), class:"btn btn-primary user-show-chat" %>
   <% else %>
     <%= form_with model: room, url: rooms_path do |f| %>
       <%= fields_for messenger do |m| %>
         <%= m.hidden_field :user_id, value: user.id %>
       <% end %>
-      <%= f.submit "chatを始める", class:"btn btn-primary btn-lg user-show-chat"%>
+      <%= f.submit "chatを始める", class:"btn btn-primary user-show-chat"%>
     <% end %>
   <% end %>
 <% end %>

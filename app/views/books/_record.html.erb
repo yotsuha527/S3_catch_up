@@ -1,0 +1,24 @@
+<table class="table">
+  <tr class="border">
+    <th>今日の投稿数</th>
+    <th>前日の投稿数</th>
+    <th>前日比</th>
+  </tr>
+  <tr class="border">
+    <td><%= @today %></td>
+    <td><%= @yesterday %></td>
+    <td><%= @day_diff %></td>
+  </tr>
+</table>
+<table class="table">
+  <tr class="border">
+    <th>今週の投稿数</th>
+    <th>前週の投稿数</th>
+    <th>前週比</th>
+  </tr>
+  <tr class="border">
+    <td><%= @week %></td>
+    <td><%= @prev_week %></td>
+    <td><%= @week_diff %></td>
+  </tr>
+</table>

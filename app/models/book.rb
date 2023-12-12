@@ -6,6 +6,9 @@ class Book < ApplicationRecord
   
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
+
+  # 閲覧機能アソシエーション
+  has_many :view_counts, dependent: :destroy
   
   def favorited_by?(user)
     favorites.where(user_id: user.id).exists?

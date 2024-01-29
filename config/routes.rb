@@ -17,6 +17,6 @@ Rails.application.routes.draw do
   get '/search', to: 'searches#search'
 
   # グループ機能用Routing
-  resources :groups, only: [:new, :index, :create, :edit, :update] do
+  resources :groups, only: [:new, :index, :create, :show, :edit, :update] do
   end
 end

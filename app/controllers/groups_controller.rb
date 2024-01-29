@@ -10,8 +10,17 @@ class GroupsController < ApplicationController
 
   def create
     group = Group.new(group_params)
-    group.save
-    redirect_to groups_path
+    if group.save
+      group.add_user(current_user)
+      redirect_to groups_path
+    else
+      redirect_to groups_path
+    end
+  end
+
+  def show
+    @book = Book.new
+    @members = 0 #後で実装
   end
 
   def edit

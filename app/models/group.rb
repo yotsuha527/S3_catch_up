@@ -11,4 +11,8 @@ class Group < ApplicationRecord
     end
     self.group_image.variant(resize_to_fill: [weight,height]).processed
   end
+
+  def add_user(user)
+    group_users.create({user_id: user.id, group_id: id})
+  end
 end

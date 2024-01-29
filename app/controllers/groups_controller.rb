@@ -20,7 +20,13 @@ class GroupsController < ApplicationController
 
   def show
     @book = Book.new
-    @members = 0 #後で実装
+    @group = Group.find(params[:id])
+    if @group.group_join?(current_user)
+      @flag = 0
+    else
+      @flag = 1
+    end
+    @members = @group.users
   end
 
   def edit
@@ -28,6 +34,22 @@ class GroupsController < ApplicationController
   end
 
   def update
+
+  end
+  
+  def destroy
+  end
+
+  def add
+    group = Group.find(params[:group_id])
+    group.add_user(current_user)
+    redirect_to groups_path
+  end
+
+  def leave
+    group = Group.find(params[:group_id])
+    group.leave_user(current_user)
+    redirect_to groups_path
   end
 
   private

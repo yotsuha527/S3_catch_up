@@ -2,7 +2,7 @@ class Group < ApplicationRecord
   has_one_attached :group_image
 
   has_many :group_users
-  has_many :users, through: :group_user
+  has_many :users, through: :group_users, source: :user
 
   def get_group_image(weight, height)
     unless self.group_image.attached?
@@ -14,5 +14,13 @@ class Group < ApplicationRecord
 
   def add_user(user)
     group_users.create({user_id: user.id, group_id: id})
+  end
+
+  def leave_user(user)
+    group_users.find_by(user_id: user.id).destroy
+  end
+
+  def group_join?(user)
+    users.include?(user)
   end
 end

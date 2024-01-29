@@ -20,7 +20,7 @@ class User < ApplicationRecord
   validates :introduction, length: { maximum: 50 }
 
   # グループ機能用記述
-  has_many :group_users
+  has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_user
 
   def follow(user)

@@ -18,7 +18,11 @@ class User < ApplicationRecord
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
-  
+
+  # グループ機能用記述
+  has_many :group_users
+  has_many :groups, through: :group_user
+
   def follow(user)
     relationships.create(followed_id: user.id)
   end

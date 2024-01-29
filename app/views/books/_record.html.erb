@@ -1,3 +1,4 @@
+<h2>投稿数の前日比・前週比</h2>
 <table class="table">
   <tr class="border">
     <th>今日の投稿数</th>
@@ -7,7 +8,7 @@
   <tr class="border">
     <td><%= @today %></td>
     <td><%= @yesterday %></td>
-    <td><%= @day_diff %></td>
+    <td><%= @day_diff.to_i %>%</td>
   </tr>
 </table>
 <table class="table">
@@ -19,6 +20,77 @@
   <tr class="border">
     <td><%= @week %></td>
     <td><%= @prev_week %></td>
-    <td><%= @week_diff %></td>
+    <td><%= @week_diff.to_i %>%</td>
   </tr>
 </table>
+
+# 7日分の投稿データの確認
+<h2>7日間分の投稿数</h2>
+<table class="table">
+  <tr class="border">
+    <% for day in 0..6 do %>
+      <% if @day == 0%>
+        <th>今日</th>
+      <% else %>
+        <th><%= @day %>日前</th>
+      <% end %>
+      <% @day-=1 %>
+    <% end %>
+  </tr>
+  <tr class="border">
+      <td><%= user.books.where('created_at < ?', Date.today.ago(6.days)).where('created_at > ?', Date.today.ago(7.days)).count %></td>
+      <td><%= user.books.where('created_at < ?', Date.today.ago(5.days)).where('created_at > ?', Date.today.ago(6.days)).count %></td>
+      <td><%= user.books.where('created_at < ?', Date.today.ago(4.days)).where('created_at > ?', Date.today.ago(5.days)).count %></td>
+      <td><%= user.books.where('created_at < ?', Date.today.ago(3.days)).where('created_at > ?', Date.today.ago(4.days)).count %></td>
+      <td><%= user.books.where('created_at < ?', Date.yesterday).where('created_at > ?', Date.today.ago(3.days)).count %></td>
+      <td><%= user.books.where('created_at < ?', Date.today).where('created_at > ?', Date.yesterday).count %></td>
+      <td><%= user.books.where('created_at > ?', Date.today).count %></td>
+  </tr>
+</table>
+
+# グラフ
+<canvas id="myLineChart"></canvas>
+<script>
+
+    var ctx = document.getElementById("myLineChart");
+    var myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+        datasets: [
+          {
+            label: '投稿した本の数',
+            data: [
+              <%= user.books.where('created_at < ?', Date.today.ago(6.days)).where('created_at > ?', Date.today.ago(7.days)).count %>,
+              <%= user.books.where('created_at < ?', Date.today.ago(5.days)).where('created_at > ?', Date.today.ago(6.days)).count %>,
+              <%= user.books.where('created_at < ?', Date.today.ago(4.days)).where('created_at > ?', Date.today.ago(5.days)).count %>,
+              <%= user.books.where('created_at < ?', Date.today.ago(3.days)).where('created_at > ?', Date.today.ago(4.days)).count %>,
+              <%= user.books.where('created_at < ?', Date.yesterday).where('created_at > ?', Date.today.ago(3.days)).count %>,
+              <%= user.books.where('created_at < ?', Date.today).where('created_at > ?', Date.yesterday).count %>,
+              <%= user.books.where('created_at > ?', Date.today).count %>
+            ],
+            borderColor: "rgba(0,0,255,1)",
+            backgroundColor: "rgba(0,0,0,0)",
+            tension: 0.4
+          }
+        ],
+      },
+      options: {
+        title: {
+          display: true,
+          text: '7日間の投稿数の比較'
+        },
+        responsive: true,
+        scales: {
+          y:{
+            suggestedMin: 0,
+            suggestedMax: 10
+          },
+          x:{
+            stacked: true
+          },
+        },
+      }
+    });
+
+</script>

@@ -14,20 +14,22 @@ class UsersController < ApplicationController
     @prev_week = @user.books.where('created_at < ?', Date.today-7.days).where('created_at > ?', Date.today-14.days).count
     # 日毎の記録
     if @yesterday == 0
-      @day_diff = "前日の投稿が0件の為計算できません。"
+      @day_diff = 0
     elsif @today == 0
-      @day_diff = "本日の投稿が0件の為計算できません。"
+      @day_diff = 0
     else
-      @day_diff = @today / @yesterday
+      @day_diff = (@today.to_f / @yesterday.to_f) * 100
     end
     # 週毎の記録
     if @prev_week == 0
-      @week_diff = "前週の投稿が0件の為計算できません。"
+      @week_diff = 0
     elsif @week == 0
-      @week_diff = "今週の投稿が0件の為計算できません。"
+      @week_diff = 0
     else
-      @week_diff = @week / @prev_week
+      @week_diff = (@week.to_f / @prev_week.to_f) * 100
     end
+    # 7日毎の記録
+    @day = 6
   end
 
   def index
@@ -44,6 +46,18 @@ class UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def date_data
+    user = User.includes(:books).find(params[:user_id])
+    date = Date.parse(params[:created_at])
+    @books = user.books.where(created_at: date.all_day)
+
+    p user
+    p date
+    p @books
+
+    render :date_data
   end
 
   private

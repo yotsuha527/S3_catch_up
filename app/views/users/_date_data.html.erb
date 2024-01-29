@@ -1,0 +1,7 @@
+<h2>日付による投稿検索</h2>
+<%= form_with url: user_date_data_path(user), method: :get, local: false do |f| %>
+  <div class="input-group">
+    <%= f.date_field :created_at, class: "form-control" %>
+    <%= f.submit "検索", class: "btn btn-info" %>
+  </div>
+<% end %>

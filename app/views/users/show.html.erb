@@ -8,8 +8,10 @@
     </div>
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
-      <%= render 'books/index',books: @books %>
+      <%= render 'books/index', books: @books %>
       <%= render 'books/record', user: @user %>
+      <%= render 'users/date_data', user: @user %>
+      <div class='date-data'></div>
     </div>
   </div>
 </div>

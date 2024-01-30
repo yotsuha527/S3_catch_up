@@ -39,6 +39,20 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+  # 新着順表示用アクション
+  def sort_new
+    @book = Book.new
+    @books = Book.all.order(created_at: :desc)
+    render :index
+  end
+
+  # 評価の高い順表示用アクション
+  def sort_review
+    @book = Book.new
+    @books = Book.all.order(star: :desc)
+    render :index
+  end
+
   private
 
   def book_params

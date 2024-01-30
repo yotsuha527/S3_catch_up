@@ -57,13 +57,15 @@ filename: 'monster06.png')
 User.all.each do |user|
     user.books.create!(
       title: "タイトル#{user.id}",
-      body: "テキストテキストテキストテキスト"
+      body: "テキストテキストテキストテキスト",
+      star: rand(6)
     )
 end
 
 User.all.each do |user|
     user.books.create!(
       title: "あ#{user.id}",
-      body: "ん#{user.id}"
+      body: "ん#{user.id}",
+      star: rand(6)
     )
 end

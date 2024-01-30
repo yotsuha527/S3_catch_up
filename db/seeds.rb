@@ -54,11 +54,19 @@ user = User.create!(
 user.profile_image.attach(io: File.open(Rails.root.join('app/assets/images/monster06.png')),
 filename: 'monster06.png')
 
+Tag.create(
+    tag: "tales"
+)
+Tag.create(
+    tag: "anime"
+)
+
 User.all.each do |user|
     user.books.create!(
       title: "タイトル#{user.id}",
       body: "テキストテキストテキストテキスト",
-      star: rand(6)
+      star: rand(6),
+      tag_id: 1
     )
 end
 
@@ -66,6 +74,9 @@ User.all.each do |user|
     user.books.create!(
       title: "あ#{user.id}",
       body: "ん#{user.id}",
-      star: rand(6)
+      star: rand(6),
+      tag_id: 2
     )
+
+
 end

@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   resources :groups, only: [:new, :index, :create, :show, :edit, :update, :destroy] do
     post 'adds' => 'groups#add', as: 'add'
     delete 'leaves' => 'groups#leave', as: 'leave'
+    resources :group_mailers, only: [:new, :create, :show]
   end
 end

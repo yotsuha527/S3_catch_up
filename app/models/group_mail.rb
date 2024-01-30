@@ -1,0 +1,2 @@
+class GroupMail < ApplicationRecord
+end

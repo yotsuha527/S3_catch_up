@@ -1,0 +1,20 @@
+<div class='container'>
+  <div class='row'>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+    <h2>Event Mail</h2>
+    <%= form_with model: @new_group_mail, url: group_group_mailers_path do |f| %>
+      <%= render 'layouts/errors', obj: @new_group_mail %>
+      <div class="form-group">
+        <%= f.label :tilte %>
+        <%= f.text_field :title, class: "form-control title" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :content %>
+        <%= f.text_area :content, class: "form-control content" %>
+      </div>
+      <div class="form-group">
+        <%= f.submit 'Send Mail', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
